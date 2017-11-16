@@ -1,5 +1,5 @@
-#ifndef CAT_H
-#define CAT_H
+#ifndef DOG_H
+#define DOG_H
 #include <iostream>
 #include <string>
 #include <unistd.h>
@@ -9,27 +9,27 @@
 
 using namespace std;
 
-class Cat : public Pet{
+class Dog : public Pet{
 	public:
-		Cat(string type);
+		Dog(string type);
 		void setDes(string newDes);
 		virtual void speak();
 		virtual void toString();
+		string getBreed(){
+			return breed;
+		};
 		string getDes(){
 			return des;
 		};
-		string getColor(){
-			return color;
-		};
 	private:
-		string color;
+		string breed;
 		string des;
 };
 
-Cat::Cat(string type):Pet(type){
-	cout << "Please enter " << this->getName() << "'s color > ";
+Dog::Dog(string type):Pet(type){
+	cout << "Please enter " << this->getName() << "'s breed > ";
 	cin.ignore();
-	getline(cin, color);
+	getline(cin, breed);
 	system("CLS");
 	cout << "Please enter " << this->getName() << "'s description > ";
 	//cin.ignore();
@@ -37,14 +37,14 @@ Cat::Cat(string type):Pet(type){
 	system("CLS");
 }
 
-void Cat::toString(){
+void Dog::toString(){
 	Pet::toString();
-	cout << "Color: " << this->color << endl
+	cout << "Breed: " << this->breed << endl
 	  	 << "Description: " << this->des << endl << endl;
 }
 
-void Cat::speak(){
-	cout << "Meow... Definitly a cat!";
+void Dog::speak(){
+	cout << "WOOF! WOOF! WOOF!";
 	sleep(3);
 	system("CLS");
 }

@@ -1,8 +1,17 @@
 #include <iostream>
-#include "Pet.h"
 #include "Cat.h"
+#include "Dog.h"
+#include "Pet.h"
+#include "List.h"
+#include "Fish.h"
+#include "Bird.h"
+#include <fstream>
 
 using namespace std;
+
+List list;
+ofstream out;
+string type;
 
 int menu()
 {
@@ -42,15 +51,19 @@ void addMenu(int opt){
 		system("CLS");
 		switch(opt)
 		{
-			case 1: cout <<"add cat\n";
+			case 1:
+				list.Insert(new Cat("Cat"));
 				break;
-			case 2: cout <<"add dog\n";
+			case 2: 
+				list.Insert(new Dog("Dog"));
 				break;
-			case 3: cout <<"add bird\n";
+			case 3:
+				list.Insert(new Bird("Bird"));
 				break;
-			case 4: cout <<"add fish\n";
+			case 4:
+				list.Insert(new Fish("Fish"));
 				break;
-			case 5: cout <<"go back\n";
+			case 5: cout << "Back to main menu..." << endl;
 				break;
 			case 6: cout <<"Exit\n";
 				break;
@@ -61,12 +74,9 @@ void addMenu(int opt){
 }
 int main()
 {
-	Cat pet1;
 	
-	pet1.speak();
-	pet1.toString();
-	/*
 	int option, add;
+	string name;
 	
 	do
 	{
@@ -75,19 +85,82 @@ int main()
 		switch(option)
 		{
 			case 1: 
-				cout <<"Add\n";
 				add = subAdd();
 				addMenu(add);
 				break;
-			case 2: cout <<"Edit\n";
+			case 2: 
+				system("CLS");
+				cout << "Enter the name of the pet you wish to edit > ";
+				cin >> name;
+				list.Edit(name);
 				break;
-			case 3: cout <<"Delete\n";
+			case 3: 
+				system("CLS");
+				cout << "Enter the name of the pet you wish to delete > ";
+				cin >> name;
+				list.Delete(name);
 				break;
-			case 4: cout <<"Sort\n";
+			case 4: 
+				system("CLS");
+				list.BubbleSort();
+				cout << "Sorted the list by price... ";
+				sleep(1);
+				system("CLS");
 				break;
-			case 5: cout <<"File I/O\n";
+			case 5: 
+				out.open("savedData.txt");
+				Pet* temp;
+				list.ResetList();
+				temp = list.getFirstItem();
+				do {
+					temp = list.GetNextItem();
+					type = temp->getType();
+					if (type == "Cat"){
+						Cat* cat;
+						cat = (Cat*)temp;
+						out << cat->getType() << endl
+							<< cat->getName() << endl
+							<< cat->getPrice() << endl
+							<< cat->getAge() << endl
+							<< cat->getColor() << endl
+							<< cat->getDes() << endl;
+					}
+					else if (type == "Dog"){
+						Dog* dog;
+						dog = (Dog*)temp;
+						out << dog->getType() << endl
+							<< dog->getName() << endl
+							<< dog->getPrice() << endl
+							<< dog->getAge() << endl
+							<< dog->getBreed() << endl
+							<< dog->getDes() << endl;
+					}
+					else if (type == "Fish"){
+						Fish* fish;
+						fish = (Fish*)temp;
+						out << fish->getType() << endl
+							<< fish->getName() << endl
+							<< fish->getPrice() << endl
+							<< fish->getAge() << endl
+							<< fish->getBreed() << endl
+							<< fish->getDes() << endl;
+					}
+					else if (type == "Bird"){
+						Bird* bird;
+						bird = (Bird*)temp;
+						out << bird->getType() << endl
+							<< bird->getName() << endl
+							<< bird->getPrice() << endl
+							<< bird->getAge() << endl
+							<< bird->getDes() << endl;
+					} 
+				} while (list.HasNext());
+				out.close();
 				break;
-			case 6: cout <<"Print\n";
+			case 6: cout <<"Print:\n";
+				sleep(.5);
+				system("CLS");
+				list.printList();
 				break;
 			case 7: cout <<"Goodbye\n";
 				break;
@@ -95,7 +168,6 @@ int main()
 		}
 		system("PAUSE");
 	}while (option != 7);
-	*/
 	return 0;
 }
 
